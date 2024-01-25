@@ -1,6 +1,6 @@
 # Timetracker
 
-Tracks every 5 minutes if system is running to store the beginning and end of using the system.
+Tracks every 15 minutes if system is running to store the beginning and end of using the system.
 
 ## Parameters
 
