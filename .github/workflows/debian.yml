@@ -1,0 +1,38 @@
+name: Create the timetracker DEB
+
+permissions:
+  contents: write
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  Create_Packages:
+    name: Create Package
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Build
+        run: go build -v .
+
+      - name: Copy necessary files
+        run: |
+          mkdir -p PKG_SOURCE/usr/local/bin
+          mkdir -p PKG_SOURCE/var/lib/timetracker
+          mkdir -p PKG_SOURCE/lib/systemd/system
+          cp -Rf ./DEBIAN PKG_SOURCE/
+          cp -Rf ./timetracker PKG_SOURCE/usr/local/bin/
+          cp -Rf ./systemd/* PKG_SOURCE/lib/systemd/system/
+
+      - name: Create Deb package
+        run: |
+          dpkg-deb --build PKG_SOURCE timetracker_${{github.ref_name}}.deb
+
+      - name: Release the Deb package
+        uses: softprops/action-gh-release@v1
+        with:
+          files: timetracker_${{github.ref_name}}.deb
