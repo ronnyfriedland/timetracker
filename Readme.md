@@ -2,6 +2,9 @@
 
 Tracks every 15 minutes if system is running to store the beginning and end of using the system.
 
+[![Anchore Syft SBOM scan](https://github.com/ronnyfriedland/timetracker/actions/workflows/anchore-syft.yml/badge.svg)](https://github.com/ronnyfriedland/timetracker/actions/workflows/anchore-syft.yml)
+[![CodeQL](https://github.com/ronnyfriedland/timetracker/actions/workflows/codeql.yml/badge.svg)](https://github.com/ronnyfriedland/timetracker/actions/workflows/codeql.yml)
+
 ## Parameters
 
 The timetracker application provides the following arguments which can be passed:
