@@ -10,6 +10,7 @@ import (
 )
 
 const dateLayout = "02.01.2006"
+const timeLayout = "15:04:05"
 
 func main() {
 	configPath := flag.String("configpath", "/var/lib/timetracker", "the config path")
@@ -37,8 +38,8 @@ func main() {
 			duration.Hours())
 		log.Printf("[%s] - Start: %s, End: %s",
 			modificationTime.Format(dateLayout),
-			from.Format(dateLayout),
-			to.Format(dateLayout))
+			from.Format(timeLayout),
+			to.Format(timeLayout))
 
 		// remove data from status
 		cleanupStatus(timeTrackerStatusFile)
