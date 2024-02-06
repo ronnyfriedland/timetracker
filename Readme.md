@@ -37,6 +37,13 @@ To verify if the timer is running you can check it using:
 systemctl list-timers
 ```
 
+### Show results
+
+The aggregated data can be displayed using `journalctl`:
+```shell
+journalctl -u timetracker.service -t timetracker
+```
+
 ## License
 
 This application is published under the [MIT license](LICENSE).
