@@ -17,7 +17,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Build
-        run: go build -v .
+        run: go build -o timetracker cmd/main.go
 
       - name: Copy necessary files
         run: |

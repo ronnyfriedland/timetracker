@@ -1,21 +1,22 @@
-package main
+package logic
 
 import (
 	"bufio"
-	"flag"
 	"log"
 	"math"
 	"os"
 	"time"
 )
 
-const dateLayout = "02.01.2006"
-const timeLayout = "15:04:05"
+type Duration struct {
+	Date      time.Time
+	StartTime time.Time
+	EndTime   time.Time
+	Duration  time.Duration
+	Complete  bool
+}
 
-func main() {
-	configPath := flag.String("configpath", "/var/lib/timetracker", "the config path")
-	flag.Parse()
-
+func Execute(configPath *string) Duration {
 	var currentTime = time.Now()
 	var modificationTime time.Time
 
@@ -31,21 +32,18 @@ func main() {
 	if math.Abs(float64(modificationTime.Day()-currentTime.Day())) == 0 {
 		// same day, add to status
 		addCurrentToStatus(timeTrackerStatusFile, currentTime)
+
+		return Duration{Complete: false}
 	} else {
 		duration, from, to := getDurationFromStatus(timeTrackerStatusFile)
-		log.Printf("[%s] - Work duration: %2.2fh",
-			modificationTime.Format(dateLayout),
-			duration.Hours())
-		log.Printf("[%s] - Start: %s, End: %s",
-			modificationTime.Format(dateLayout),
-			from.Format(timeLayout),
-			to.Format(timeLayout))
 
 		// remove data from status
 		cleanupStatus(timeTrackerStatusFile)
 
 		// new day, add first status
 		addCurrentToStatus(timeTrackerStatusFile, currentTime)
+
+		return Duration{Date: modificationTime, StartTime: from, EndTime: to, Duration: duration, Complete: true}
 	}
 }
 
