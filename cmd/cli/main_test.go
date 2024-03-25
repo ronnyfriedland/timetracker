@@ -1,4 +1,4 @@
-package cli
+package main
 
 import (
 	"bytes"
@@ -17,7 +17,7 @@ func TestRunNotComplete(t *testing.T) {
 
 	directory, _ := createStatusFile()
 
-	Run(&directory)
+	execute(&directory)
 
 	if logContent.String() != "" {
 		log.Fatalf("Expected empty logmessage")
@@ -34,7 +34,7 @@ func TestRunComplete(t *testing.T) {
 
 	setModificationDate(fileName, "28.02.2022")
 
-	Run(&directory)
+	execute(&directory)
 
 	if logContent.String() == "" {
 		log.Fatalf("Expected logmessage")

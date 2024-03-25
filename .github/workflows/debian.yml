@@ -9,15 +9,15 @@ on:
       - 'v*'
 
 jobs:
-  Create_Packages:
-    name: Create Package
+  Create_Cli_Package:
+    name: Create Cli Package
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
       - name: Build
-        run: go build -o timetracker cmd/main.go
+        run: go build -o timetracker-cli ronnyfriedland/timetracker/v2/cli
 
       - name: Copy necessary files
         run: |
@@ -25,14 +25,45 @@ jobs:
           mkdir -p PKG_SOURCE/var/lib/timetracker
           mkdir -p PKG_SOURCE/lib/systemd/system
           cp -Rf ./DEBIAN PKG_SOURCE/
-          cp -Rf ./timetracker PKG_SOURCE/usr/local/bin/
+          cp -Rf ./timetracker-cli PKG_SOURCE/usr/local/bin/
           cp -Rf ./systemd/* PKG_SOURCE/lib/systemd/system/
 
       - name: Create Deb package
         run: |
-          dpkg-deb --build PKG_SOURCE timetracker_${{github.ref_name}}.deb
+          dpkg-deb --build PKG_SOURCE timetracker-cli_${{github.ref_name}}.deb
 
       - name: Release the Deb package
         uses: softprops/action-gh-release@v1
         with:
-          files: timetracker_${{github.ref_name}}.deb
+          files: timetracker-cli_${{github.ref_name}}.deb
+  Create_Ui_Package:
+    name: Create Ui Package
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Build UI
+        run: go build -o build/timetracker-ui ronnyfriedland/timetracker/v2/ui
+
+      - name: Build CLI
+        run: go build -o build/timetracker-cli ronnyfriedland/timetracker/v2/cli
+
+      - name: Copy necessary files
+        run: |
+          mkdir -p PKG_SOURCE/usr/local/bin
+          mkdir -p PKG_SOURCE/var/lib/timetracker
+          mkdir -p PKG_SOURCE/lib/systemd/system
+          cp -Rf ./DEBIAN PKG_SOURCE/
+          cp -Rf ./build/timetracker-ui PKG_SOURCE/usr/local/bin/
+          cp -Rf ./build/timetracker-cli PKG_SOURCE/usr/local/bin/
+          cp -Rf ./systemd/* PKG_SOURCE/lib/systemd/system/
+
+      - name: Create Deb package
+        run: |
+          dpkg-deb --build PKG_SOURCE timetracker-ui_${{github.ref_name}}.deb
+
+      - name: Release the Deb package
+        uses: softprops/action-gh-release@v1
+        with:
+          files: timetracker-ui_${{github.ref_name}}.deb

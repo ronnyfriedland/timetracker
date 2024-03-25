@@ -21,8 +21,18 @@ jobs:
       with:
         go-version: '1.18'
 
-    - name: Build
-      run: go build -v ./...
+    - name: Test UI
+      run: go test -cover -v go test ronnyfriedland/timetracker/v2/ui
 
-    - name: Test
-      run: go test -cover -v ./...
+    - name: Test CLI
+      run: go test -cover -v go test ronnyfriedland/timetracker/v2/cli
+
+    - name: Test Logic
+      run: go test -cover -v go test ronnyfriedland/timetracker/v2/logic
+
+    - name: Build UI
+      run: go build -o build/timetracker-ui ronnyfriedland/timetracker/v2/ui
+
+    - name: Build CLI
+      run: go build -o build/timetracker-cli ronnyfriedland/timetracker/v2/cli
+

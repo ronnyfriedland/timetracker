@@ -3,6 +3,6 @@ Description=track time
 
 [Service]
 Type=oneshot
-ExecStart=/usr/local/bin/timetracker
+ExecStart=/usr/local/bin/timetracker-cli
 User=timetracker
 Group=systemd-journal
