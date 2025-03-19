@@ -11,11 +11,14 @@ The timetracker application provides the following arguments which can be passed
 
 | Property      | Description                                                                |
 |---------------|----------------------------------------------------------------------------|
+| archivedata   | Enables archiving timetracker status to excel archive file, default: false |
 | configpath    | Defines the location of the necessary files, default: /var/lib/timetracker |
 
 ## Execution
 
 The application is triggered by a systemd timer which triggers the application via systemd unit.
+
+*Note:* Running timetracker with ystemd unit uses the default property values. To change it you have to modify the unit file.
 
 To enable the timer you have to (requires root privileges):
 

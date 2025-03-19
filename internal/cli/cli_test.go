@@ -16,8 +16,9 @@ func TestRunNotComplete(t *testing.T) {
 	log.SetOutput(&logContent)
 
 	directory, _ := createStatusFile()
+	archiveData := false
 
-	Run(&directory)
+	Run(&directory, &archiveData)
 
 	if logContent.String() != "" {
 		log.Fatalf("Expected empty logmessage")
@@ -31,10 +32,11 @@ func TestRunComplete(t *testing.T) {
 	log.SetOutput(&logContent)
 
 	directory, fileName := createStatusFile()
+	archiveData := false
 
 	setModificationDate(fileName, "28.02.2022")
 
-	Run(&directory)
+	Run(&directory, &archiveData)
 
 	if logContent.String() == "" {
 		log.Fatalf("Expected logmessage")
