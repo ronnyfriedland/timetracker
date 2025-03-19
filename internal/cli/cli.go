@@ -2,14 +2,17 @@ package cli
 
 import (
 	"log"
+
+	"ronnyfriedland/timetracker/v2/internal/excel"
 	"ronnyfriedland/timetracker/v2/internal/logic"
 )
 
 const dateLayout = "02.01.2006"
 const timeLayout = "15:04:05"
 
-func Run(configPath *string) {
+func Run(configPath *string, archiveData *bool) {
 	duration := logic.Execute(configPath)
+
 	if duration.Complete {
 		log.Printf("[%s] - Work duration: %2.2fh",
 			duration.Date.Format(dateLayout),
@@ -20,5 +23,8 @@ func Run(configPath *string) {
 			duration.StartTime.Format(timeLayout),
 			duration.EndTime.Format(timeLayout))
 
+		if *archiveData {
+			excel.Export(configPath, duration)
+		}
 	}
 }
