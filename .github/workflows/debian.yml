@@ -15,6 +15,9 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+  
+      - name: Tidy dependencies
+        run: go mod tidy
 
       - name: Build
         run: go build -o timetracker cmd/main.go
