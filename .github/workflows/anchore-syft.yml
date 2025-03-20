@@ -24,7 +24,7 @@ jobs:
   Anchore-Build-Scan:
     permissions:
       contents: write # required to upload to the Dependency submission API
-    runs-on: debian-latest
+    runs-on: ubuntu-latest
     steps:
     - name: Checkout the code
       uses: actions/checkout@v3
