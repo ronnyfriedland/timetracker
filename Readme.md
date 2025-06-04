@@ -18,7 +18,13 @@ The timetracker application provides the following arguments which can be passed
 
 The application is triggered by a systemd timer which triggers the application via systemd unit.
 
-*Note:* Running timetracker with ystemd unit uses the default property values. To change it you have to modify the unit file.
+*Note:* Running timetracker with systemd unit uses the default property values. To change it you have use the appropriate alternative.
+
+### Switch alternative
+
+```shell
+update-alternatives --config timetracker
+```
 
 To enable the timer you have to (requires root privileges):
 

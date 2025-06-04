@@ -5,6 +5,11 @@ set -e
 case "$1" in
     configure)
       chown -R timetracker:timetracker /var/lib/timetracker
+
+      chmod u+x /var/lib/timetracker/timetracker*.sh
+
+      update-alternatives --install /usr/local/bin/timetracker timetracker /var/lib/timetracker/timetracker-archive.sh 100
+      update-alternatives --install /usr/local/bin/timetracker timetracker /var/lib/timetracker/timetracker.sh 1000
     ;;
 
     abort-upgrade|abort-remove|abort-deconfigure)
