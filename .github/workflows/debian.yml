@@ -28,7 +28,8 @@ jobs:
           mkdir -p PKG_SOURCE/var/lib/timetracker
           mkdir -p PKG_SOURCE/lib/systemd/system
           cp -Rf ./DEBIAN PKG_SOURCE/
-          cp -Rf ./timetracker PKG_SOURCE/usr/local/bin/
+          cp -Rf ./timetracker PKG_SOURCE/var/lib/timetracker/
+          cp -Rf ./scripts/* PKG_SOURCE/var/lib/timetracker/
           cp -Rf ./systemd/* PKG_SOURCE/lib/systemd/system/
 
       - name: Create Deb package
