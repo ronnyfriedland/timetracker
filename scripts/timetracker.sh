@@ -1,3 +1,3 @@
 #!/usr/bin/env sh
 
-timetracker
+/var/lib/timetracker/timetracker

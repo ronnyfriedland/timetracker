@@ -1,3 +1,3 @@
 #!/usr/bin/env sh
 
-timetracker -archivedata=true
+/var/lib/timetracker/timetracker -archivedata=true
